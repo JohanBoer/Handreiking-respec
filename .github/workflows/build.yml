@@ -18,6 +18,8 @@ jobs:
       # Safe cleanup of docs folder
       # -----------------------
       - name: Safe remove docs folder
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
@@ -25,18 +27,20 @@ jobs:
           if [ -d "./docs" ]; then
             rm -rf ./docs
             echo "Folder './docs' removed."
-            
-            # Authenticate git push using GITHUB_TOKEN
+
+            # Use token-authenticated remote
             git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-            
+
             git add ./docs
-            git commit -m "Automatisch verwijderde docs map" || echo "Geen wijzigingen om te committen"
-            git push origin HEAD:main
+            if git diff-index --quiet HEAD; then
+              echo "No changes to commit"
+            else
+              git commit -m "Automatisch verwijderde docs map"
+              git push origin HEAD:main
+            fi
           else
             echo "Folder './docs' does not exist. Skipping removal."
           fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # -----------------------
       # Prepare static folder & cache
@@ -96,15 +100,19 @@ jobs:
       # Commit & push generated files
       # -----------------------
       - name: Commit & push generated files
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          
-          # Authenticate git push using GITHUB_TOKEN
+
+          # Token-authenticated remote
           git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
 
           git add ./docs/
-          git commit -m "Automatisch gegenereerde bestanden toegevoegd" || echo "Geen wijzigingen om te committen"
-          git push origin HEAD:main
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          if git diff-index --quiet HEAD; then
+            echo "No changes to commit"
+          else
+            git commit -m "Automatisch gegenereerde bestanden toegevoegd"
+            git push origin HEAD:main
+          fi
