@@ -2,7 +2,10 @@ name: Build
 # on:
 #  workflow_call:
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - main        # 👈 runs whenever you push or merge to 'main'
+  workflow_dispatch: # 👈 allows manual trigger from the Actions tab
 jobs:
   main:
     name: Snapshot
