@@ -23,8 +23,14 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Generate HTML via ReSpec
-        run: npx respec --timeout 600000 --src index.html --out static/snapshot.html -- --no-sandbox
+      - name: Install Chromium
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y chromium-browser
+
+      - name: Generate static HTML via ReSpec
+        run: |
+          npx respec --timeout 600000 --src index.html --out static/snapshot.html --no-sandbox --executable-path=/usr/bin/chromium-browser
 
         continue-on-error: false
 
