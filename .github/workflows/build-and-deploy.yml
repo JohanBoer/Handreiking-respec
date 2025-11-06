@@ -29,8 +29,11 @@ jobs:
           sudo apt-get install -y chromium-browser
 
       - name: Generate static HTML via ReSpec
+        env:
+          PUPPETEER_EXECUTABLE_PATH: "/usr/bin/chromium-browser"
         run: |
-          npx respec --timeout 600000 --src index.html --out static/snapshot.html --no-sandbox --executable-path=/usr/bin/chromium-browser
+          npx respec --timeout 600000 --src index.html --out static/snapshot.html --no-sandbox
+
 
         continue-on-error: false
 
