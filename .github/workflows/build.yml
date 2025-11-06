@@ -17,7 +17,7 @@ jobs:
       # -----------------------
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # volledige history nodig voor diff-index en push
+          fetch-depth: 0  # nodig voor git diff-index en push
 
       # -----------------------
       # Configure git user
@@ -72,17 +72,18 @@ jobs:
           cp -r ~/static/* ./docs/
 
       # -----------------------
-      # Commit & push changes to temporary branch
+      # Commit & push changes to a unique branch
       # -----------------------
       - name: Commit & push changes
         run: |
-          git checkout -b workflow/docs-update || git checkout workflow/docs-update
+          branch_name=workflow/docs-update-${GITHUB_RUN_ID}
+          git checkout -b $branch_name
           git add ./docs
           if git diff-index --quiet HEAD; then
             echo "No changes to commit"
           else
             git commit -m "Automatisch gegenereerde bestanden toegevoegd"
-            git push --set-upstream origin workflow/docs-update
+            git push --set-upstream origin $branch_name
           fi
 
       # -----------------------
@@ -94,7 +95,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "Automatisch gegenereerde bestanden toegevoegd"
-          branch: workflow/docs-update
+          branch: workflow/docs-update-${{ github.run_id }}
           base: main
           title: "Update docs"
           body: "Automatisch gegenereerde bestanden via GitHub Actions."
