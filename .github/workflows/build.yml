@@ -52,15 +52,12 @@ jobs:
       # -----------------------
       # Generate PDF
       # -----------------------
-      - name: Generate PDF
+      - name: Generate PDF safely
         run: |
           cp ~/static/snapshot.html snapshot.html
           npm i puppeteer
-          python3 -m http.server 8080 &
-          wget ./js/pdf.js
-          rm -f *.pdf
-          node pdf.js
-          mv *.pdf ~/static/
+          node ./js/pdf.js
+          mv snapshot.pdf ~/static/
 
       # -----------------------
       # Copy generated files to docs
