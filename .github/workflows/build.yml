@@ -67,7 +67,9 @@ jobs:
       # Copy generated files to docs
       # -----------------------
       - name: Copy generated files to docs
-        run: cp -r ~/static/* ./docs/
+        run: |
+          mkdir -p ./docs
+          cp -r ~/static/* ./docs/
 
       # -----------------------
       # Commit & push changes to temporary branch
