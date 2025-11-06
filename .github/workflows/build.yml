@@ -13,12 +13,11 @@ jobs:
 
     steps:
       # -----------------------
-      # Checkout repository (credentials persisted)
+      # Checkout repository
       # -----------------------
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          persist-credentials: true  # Zorgt dat git push werkt met GITHUB_TOKEN
 
       # -----------------------
       # Configure Git user
@@ -73,25 +72,10 @@ jobs:
           cp -r ~/static/* ./docs/
 
       # -----------------------
-      # Commit & push to unique branch
+      # Create Pull Request via API (geen git push nodig)
       # -----------------------
-      - name: Commit & push changes
-        run: |
-          branch_name=workflow/docs-update-${GITHUB_RUN_ID}
-          git checkout -b $branch_name
-          git add ./docs
-          if git diff-index --quiet HEAD; then
-            echo "No changes to commit"
-          else
-            git commit -m "Automatisch gegenereerde bestanden toegevoegd"
-            git push --set-upstream origin $branch_name
-          fi
-
-      # -----------------------
-      # Create Pull Request
-      # -----------------------
-      - name: Create Pull Request
-        id: cpr
+      - name: Create Pull Request with generated docs
+        id: pr
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -106,9 +90,9 @@ jobs:
       # Enable auto-merge
       # -----------------------
       - name: Enable auto-merge
-        if: steps.cpr.outputs.pull-request-number != ''
+        if: steps.pr.outputs.pull-request-number != ''
         uses: peter-evans/enable-pull-request-automerge@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          pull-request-number: ${{ steps.pr.outputs.pull-request-number }}
           merge-method: squash
