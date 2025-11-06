@@ -16,73 +16,44 @@ jobs:
       # Checkout repository
       # -----------------------
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       # -----------------------
-      # Safe cleanup of docs folder
+      # Configure git user
       # -----------------------
-      - name: Safe remove docs folder
-        env:
-          GH_PAT: ${{ secrets.GH_PAT }}
+      - name: Configure Git
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
+      # -----------------------
+      # Remove docs folder if it exists
+      # -----------------------
+      - name: Remove docs folder
+        run: |
           if [ -d "./docs" ]; then
             rm -rf ./docs
             echo "Folder './docs' removed."
-
-            # Set remote using PAT
-            git remote set-url origin https://$GH_PAT@github.com/${GITHUB_REPOSITORY}.git
-
-            git add ./docs
-            if git diff-index --quiet HEAD; then
-              echo "No changes to commit"
-            else
-              git commit -m "Automatisch verwijderde docs map"
-              git push origin HEAD:main
-            fi
           else
             echo "Folder './docs' does not exist. Skipping removal."
           fi
 
       # -----------------------
-      # Prepare static folder & cache
+      # Prepare static folder
       # -----------------------
       - run: mkdir -p ~/static
-      - name: Create cache
-        uses: actions/cache@v4
-        with:
-          path: ~/static
-          key: ${{ github.run_id }}
 
       # -----------------------
-      # Generate Static HTML
+      # Generate static HTML
       # -----------------------
       - name: Static HTML
-        run: |
-          npx respec --localhost --src index.html --out ~/static/snapshot.html
-
-      # -----------------------
-      # Check config
-      # -----------------------
-      - name: Check config
-        id: config
-        if: ${{ github.event_name == 'push'}}
-        run: |
-          echo "grep=false" >> $GITHUB_OUTPUT
-          if grep -q alternateFormats ./js/config.js; then
-            echo "grep=true" >> $GITHUB_OUTPUT
-          fi
-
-      # -----------------------
-      # Prepare docs folder for generated files
-      # -----------------------
-      - run: mkdir -p ./docs
+        run: npx respec --localhost --src index.html --out ~/static/snapshot.html
 
       # -----------------------
       # Generate PDF
       # -----------------------
-      - name: PDF
+      - name: Generate PDF
         run: |
           cp ~/static/snapshot.html snapshot.html
           npm i puppeteer
@@ -90,7 +61,6 @@ jobs:
           wget https://raw.githubusercontent.com/Logius-standaarden/Automatisering/main/scripts/pdf.js
           rm -f *.pdf
           node pdf.js      
-          find *.pdf
           mv *.pdf ~/static/
 
       # -----------------------
@@ -100,22 +70,42 @@ jobs:
         run: cp -r ~/static/* ./docs/
 
       # -----------------------
-      # Commit & push generated files
+      # Commit & push changes to temporary branch
       # -----------------------
-      - name: Commit & push generated files
+      - name: Commit & push changes
         env:
-          GH_PAT: ${{ secrets.GH_PAT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-
-          # Set remote using PAT
-          git remote set-url origin https://$GH_PAT@github.com/${GITHUB_REPOSITORY}.git
-
-          git add ./docs/
+          git checkout -b workflow/docs-update || git checkout workflow/docs-update
+          git add ./docs
           if git diff-index --quiet HEAD; then
             echo "No changes to commit"
           else
             git commit -m "Automatisch gegenereerde bestanden toegevoegd"
-            git push origin HEAD:main
+            git push --force https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git workflow/docs-update
           fi
+
+      # -----------------------
+      # Create Pull Request
+      # -----------------------
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        id: pr
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "Automatisch gegenereerde bestanden toegevoegd"
+          branch: workflow/docs-update
+          base: main
+          title: "Update docs"
+          body: "Automatisch gegenereerde bestanden via GitHub Actions."
+          draft: false
+
+      # -----------------------
+      # Auto-merge Pull Request
+      # -----------------------
+      - name: Auto-merge Pull Request
+        if: steps.pr.outputs.pull-request-number != ''
+        uses: actions-ecosystem/action-auto-merge@v0.9.1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          merge-method: squash
