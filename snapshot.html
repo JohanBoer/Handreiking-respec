@@ -116,24 +116,6 @@ ul.index code{color:inherit}
 #index-defined-here .print-only{display:initial}
 }
 </style>
-<style>
-.hljs{--base:#fafafa;--mono-1:#383a42;--mono-2:#686b77;--mono-3:#717277;--hue-1:#0b76c5;--hue-2:#336ae3;--hue-3:#a626a4;--hue-4:#42803c;--hue-5:#ca4706;--hue-5-2:#c91243;--hue-6:#986801;--hue-6-2:#9a6a01}
-@media (prefers-color-scheme:dark){
-.hljs{--base:#282c34;--mono-1:#abb2bf;--mono-2:#818896;--mono-3:#5c6370;--hue-1:#56b6c2;--hue-2:#61aeee;--hue-3:#c678dd;--hue-4:#98c379;--hue-5:#e06c75;--hue-5-2:#be5046;--hue-6:#d19a66;--hue-6-2:#e6c07b}
-}
-.hljs{display:block;overflow-x:auto;padding:.5em;color:#383a42;color:var(--mono-1,#383a42);background:#fafafa;background:var(--base,#fafafa)}
-.hljs-comment,.hljs-quote{color:#717277;color:var(--mono-3,#717277);font-style:italic}
-.hljs-doctag,.hljs-formula,.hljs-keyword{color:#a626a4;color:var(--hue-3,#a626a4)}
-.hljs-deletion,.hljs-name,.hljs-section,.hljs-selector-tag,.hljs-subst{color:#ca4706;color:var(--hue-5,#ca4706);font-weight:700}
-.hljs-literal{color:#0b76c5;color:var(--hue-1,#0b76c5)}
-.hljs-addition,.hljs-attribute,.hljs-meta-string,.hljs-regexp,.hljs-string{color:#42803c;color:var(--hue-4,#42803c)}
-.hljs-built_in,.hljs-class .hljs-title{color:#9a6a01;color:var(--hue-6-2,#9a6a01)}
-.hljs-attr,.hljs-number,.hljs-selector-attr,.hljs-selector-class,.hljs-selector-pseudo,.hljs-template-variable,.hljs-type,.hljs-variable{color:#986801;color:var(--hue-6,#986801)}
-.hljs-bullet,.hljs-link,.hljs-meta,.hljs-selector-id,.hljs-symbol,.hljs-title{color:#336ae3;color:var(--hue-2,#336ae3)}
-.hljs-emphasis{font-style:italic}
-.hljs-strong{font-weight:700}
-.hljs-link{text-decoration:underline}
-</style>
 <script id="initialUserConfig" type="application/json">{
   "shortName": "Respec-template",
   "pubDomain": "pr",
@@ -223,23 +205,26 @@ ul.index code{color:inherit}
 <link rel="stylesheet" href="https://www.w3.org/StyleSheets/TR/2021/base.css"></head>
 
 <body><h1 id="title" class="title">Handreiking "Hoe bouw ik een register" 0.0.1</h1>
-  <section id="leeswijzer">
-
-
-<meta charset="utf-8">
-<title>Error</title>
-
-
-<pre aria-busy="false"><code class="hljs">Cannot GET /leeswijzer.md</code></pre>
-
-</section>
-  <section id="sotd"></section><nav id="toc"><h2 class="introductory" id="inhoudsopgave">Inhoudsopgave</h2><ol class="toc"><li class="tocline"><a class="tocxref" href="#command"><bdi class="secno">1. </bdi>Command</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#twijfel-en-dry-run"><bdi class="secno">1.1 </bdi>Twijfel en dry-run</a></li><li class="tocline"><a class="tocxref" href="#transacties"><bdi class="secno">1.2 </bdi>Transacties</a></li></ol></li><li class="tocline"><a class="tocxref" href="#grenzen"><bdi class="secno">2. </bdi>De omgeving en grenzen van een register</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#autonomie-en-gemeenschappelijkheid"><bdi class="secno">2.1 </bdi>Autonomie en gemeenschappelijkheid</a></li><li class="tocline"><a class="tocxref" href="#registergrenzen-domein"><bdi class="secno">2.2 </bdi>Registergrenzen: domein</a></li><li class="tocline"><a class="tocxref" href="#bounded-context"><bdi class="secno">2.3 </bdi>Bounded context</a></li><li class="tocline"><a class="tocxref" href="#wellbounded-registers"><bdi class="secno">2.4 </bdi>'Wellbounded' registers</a></li><li class="tocline"><a class="tocxref" href="#bepalen-van-de-bounds"><bdi class="secno">2.5 </bdi>Bepalen van de 'bounds'</a></li><li class="tocline"><a class="tocxref" href="#uitvoeringsproces-op-hoofdlijnen"><bdi class="secno">2.6 </bdi>Uitvoeringsproces op hoofdlijnen</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#het-domeinmodel-als-kern"><bdi class="secno">2.6.1 </bdi>Het domeinmodel als kern</a></li><li class="tocline"><a class="tocxref" href="#signaal-ontvangen-en-interpreteren"><bdi class="secno">2.6.2 </bdi>Signaal ontvangen en interpreteren</a></li><li class="tocline"><a class="tocxref" href="#taken-definieren-en-uitvoeren"><bdi class="secno">2.6.3 </bdi>Taken definiëren en uitvoeren</a></li><li class="tocline"><a class="tocxref" href="#gevolgen-vastleggen"><bdi class="secno">2.6.4 </bdi>Gevolgen vastleggen</a></li><li class="tocline"><a class="tocxref" href="#informatie-beschikbaar-stellen"><bdi class="secno">2.6.5 </bdi>Informatie beschikbaar stellen</a></li></ol></li><li class="tocline"><a class="tocxref" href="#applicatieve-ondersteuning-met-het-register"><bdi class="secno">2.7 </bdi>Applicatieve ondersteuning met het register</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#van-proces-naar-applicatie"><bdi class="secno">2.7.1 </bdi>Van proces naar applicatie</a></li><li class="tocline"><a class="tocxref" href="#notificatie-command-signaalverwerking"><bdi class="secno">2.7.2 </bdi>Notificatie → Command (Signaalverwerking)</a></li><li class="tocline"><a class="tocxref" href="#command-effecten-taakuitvoering"><bdi class="secno">2.7.3 </bdi>Command → Effecten (Taakuitvoering)</a></li><li class="tocline"><a class="tocxref" href="#effecten-projecties-presentatieopmaking"><bdi class="secno">2.7.4 </bdi>Effecten → Projecties (Presentatieopmaking)</a></li><li class="tocline"><a class="tocxref" href="#register-commands-effecten-projecties"><bdi class="secno">2.7.5 </bdi>Register = Commands + Effecten + Projecties</a></li></ol></li></ol></li><li class="tocline"><a class="tocxref" href="#conformance"><bdi class="secno">3. </bdi>Conformiteit</a></li><li class="tocline"><a class="tocxref" href="#index"><bdi class="secno">A. </bdi>Index</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#index-defined-here"><bdi class="secno">A.1 </bdi>Begrippen gedefinieerd door deze specificatie</a></li><li class="tocline"><a class="tocxref" href="#index-defined-elsewhere"><bdi class="secno">A.2 </bdi>Begrippen gedefinieerd door verwijzing</a></li></ol></li><li class="tocline"><a class="tocxref" href="#references"><bdi class="secno">B. </bdi>Referenties</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#normatieve-referenties"><bdi class="secno">B.1 </bdi>Normatieve referenties</a></li></ol></li></ol></nav>
-  <section id="command"><h2 id="x1-command"><bdi class="secno">1. </bdi>Command</h2>
+  <section id="leeswijzer"><h2 id="x1-leeswijzer"><bdi class="secno">1. </bdi>Leeswijzer</h2>
+<p>Hier kan een toelichting opgenomen worden om de status en intentie van dit document toe te lichten.  </p>
+<section id="paragraaf-2"><h3 id="x1-1-paragraaf-2"><bdi class="secno">1.1 </bdi>Paragraaf 2</h3>
+<p>Dit wordt ook opgenomen in de index. </p>
+<ul>
+<li><p>Je kan bijvoorbeeld hoofdstuk 1 wat toelichten.</p>
+</li>
+<li><p>En dan hier over Hoofdstuk 2 iets toelichten </p>
+</li>
+<li><p>Uiteraard zou je hier ook een toelichting op kunnen nemen over hoe dit document gebruikt kan worden. Bijvoorbeeld dat het geen "menu" of "kookboek" voor een capabel register is, maar dat het een aantal onderwerpen beschrijft en daarbij overwegingen meegeeft om uiteindelijk tot weloverwogen keuzes te kunnen komen.</p>
+</li>
+</ul>
+</section></section>
+  <section id="sotd"></section><nav id="toc"><h2 class="introductory" id="inhoudsopgave">Inhoudsopgave</h2><ol class="toc"><li class="tocline"><a class="tocxref" href="#leeswijzer"><bdi class="secno">1. </bdi>Leeswijzer</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#paragraaf-2"><bdi class="secno">1.1 </bdi>Paragraaf 2</a></li></ol></li><li class="tocline"><a class="tocxref" href="#command"><bdi class="secno">2. </bdi>Command</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#twijfel-en-dry-run"><bdi class="secno">2.1 </bdi>Twijfel en dry-run</a></li><li class="tocline"><a class="tocxref" href="#transacties"><bdi class="secno">2.2 </bdi>Transacties</a></li></ol></li><li class="tocline"><a class="tocxref" href="#grenzen"><bdi class="secno">3. </bdi>De omgeving en grenzen van een register</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#autonomie-en-gemeenschappelijkheid"><bdi class="secno">3.1 </bdi>Autonomie en gemeenschappelijkheid</a></li><li class="tocline"><a class="tocxref" href="#registergrenzen-domein"><bdi class="secno">3.2 </bdi>Registergrenzen: domein</a></li><li class="tocline"><a class="tocxref" href="#bounded-context"><bdi class="secno">3.3 </bdi>Bounded context</a></li><li class="tocline"><a class="tocxref" href="#wellbounded-registers"><bdi class="secno">3.4 </bdi>'Wellbounded' registers</a></li><li class="tocline"><a class="tocxref" href="#bepalen-van-de-bounds"><bdi class="secno">3.5 </bdi>Bepalen van de 'bounds'</a></li><li class="tocline"><a class="tocxref" href="#uitvoeringsproces-op-hoofdlijnen"><bdi class="secno">3.6 </bdi>Uitvoeringsproces op hoofdlijnen</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#het-domeinmodel-als-kern"><bdi class="secno">3.6.1 </bdi>Het domeinmodel als kern</a></li><li class="tocline"><a class="tocxref" href="#signaal-ontvangen-en-interpreteren"><bdi class="secno">3.6.2 </bdi>Signaal ontvangen en interpreteren</a></li><li class="tocline"><a class="tocxref" href="#taken-definieren-en-uitvoeren"><bdi class="secno">3.6.3 </bdi>Taken definiëren en uitvoeren</a></li><li class="tocline"><a class="tocxref" href="#gevolgen-vastleggen"><bdi class="secno">3.6.4 </bdi>Gevolgen vastleggen</a></li><li class="tocline"><a class="tocxref" href="#informatie-beschikbaar-stellen"><bdi class="secno">3.6.5 </bdi>Informatie beschikbaar stellen</a></li></ol></li><li class="tocline"><a class="tocxref" href="#applicatieve-ondersteuning-met-het-register"><bdi class="secno">3.7 </bdi>Applicatieve ondersteuning met het register</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#van-proces-naar-applicatie"><bdi class="secno">3.7.1 </bdi>Van proces naar applicatie</a></li><li class="tocline"><a class="tocxref" href="#notificatie-command-signaalverwerking"><bdi class="secno">3.7.2 </bdi>Notificatie → Command (Signaalverwerking)</a></li><li class="tocline"><a class="tocxref" href="#command-effecten-taakuitvoering"><bdi class="secno">3.7.3 </bdi>Command → Effecten (Taakuitvoering)</a></li><li class="tocline"><a class="tocxref" href="#effecten-projecties-presentatieopmaking"><bdi class="secno">3.7.4 </bdi>Effecten → Projecties (Presentatieopmaking)</a></li><li class="tocline"><a class="tocxref" href="#register-commands-effecten-projecties"><bdi class="secno">3.7.5 </bdi>Register = Commands + Effecten + Projecties</a></li></ol></li></ol></li><li class="tocline"><a class="tocxref" href="#conformance"><bdi class="secno">4. </bdi>Conformiteit</a></li><li class="tocline"><a class="tocxref" href="#index"><bdi class="secno">A. </bdi>Index</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#index-defined-here"><bdi class="secno">A.1 </bdi>Begrippen gedefinieerd door deze specificatie</a></li><li class="tocline"><a class="tocxref" href="#index-defined-elsewhere"><bdi class="secno">A.2 </bdi>Begrippen gedefinieerd door verwijzing</a></li></ol></li><li class="tocline"><a class="tocxref" href="#references"><bdi class="secno">B. </bdi>Referenties</a><ol class="toc"><li class="tocline"><a class="tocxref" href="#normatieve-referenties"><bdi class="secno">B.1 </bdi>Normatieve referenties</a></li></ol></li></ol></nav>
+  <section id="command"><h2 id="x2-command"><bdi class="secno">2. </bdi>Command</h2>
 <ul>
 <li>Werkdefinitie: een command is een opdracht aan het register, aangeboden met de intentie daarin een verandering aan te brengen.</li>
 <li>Aangepast vanwege een test of zeven</li>
 </ul>
-<section id="twijfel-en-dry-run"><h3 id="x1-1-twijfel-en-dry-run"><bdi class="secno">1.1 </bdi>Twijfel en dry-run</h3>
+<section id="twijfel-en-dry-run"><h3 id="x2-1-twijfel-en-dry-run"><bdi class="secno">2.1 </bdi>Twijfel en dry-run</h3>
 <ul>
 <li><p>Aan gegevens in een capabel register kan getwijfeld worden. Dit heeft gevolgen voor het geautomatiseerd verwerken van commando's. Systemen kunnen immers niet (altijd) (geautomatiseerd) commando's verwerken als bij het beoordelen daarvan betwijfelde gegevens betrokken zijn. Dit is niet per se een registervraagstuk. Wel een vraagstuk dat zich op dit moment veelal buiten registers - en wel binnen procesondersteunende systemen - afspeelt.</p>
 </li>
@@ -248,7 +233,7 @@ ul.index code{color:inherit}
 <li><p>Hieraan gerelateerd is het idee van 'dry run-functionaliteit'. Dit is een query die antwoord geeft op de vraag of een command verwerkt kan worden zonder een poging te doen dat command daadwerkelijk te verwerken.  Om verschillende uitkomsten tussen 'dry run' en daadwerkelijke registratie te voorkomen, ligt het - ondanks scheiding tussen command en query (CQRS) - voor de hand deze query te laten beantwoorden aan de commandkant van het register, waar immers ook de daadwerkelijke verwerking van het command moet plaatsvinden.</p>
 </li>
 </ul>
-</section><section id="transacties"><h3 id="x1-2-transacties"><bdi class="secno">1.2 </bdi>Transacties</h3>
+</section><section id="transacties"><h3 id="x2-2-transacties"><bdi class="secno">2.2 </bdi>Transacties</h3>
 <p>Conventie (en aanbeveling?):</p>
 <ul>
 <li>Command is een opdracht die één transactie verwerkt moet worden.</li>
@@ -256,7 +241,7 @@ ul.index code{color:inherit}
 <p>...maar: business bepaalt in eerste instantie transactiegrenzen, commands sluiten daarbij aan.</p>
 <p>...maar: digitaal werken kan innovatie in business mogelijk maken. Sneller (en sequentieel) verwerken van wijzigingen in 'echte' wereld kan bijvoorbeeld consistentiewaarborgen van aggregaatniveau naar registerniveau (dat daardoor in feite zelf aggregaat wordt?) brengen.</p>
 </section></section>
-  <section id="grenzen"><h2 id="x2-de-omgeving-en-grenzen-van-een-register"><bdi class="secno">2. </bdi>De omgeving en grenzen van een register</h2>
+  <section id="grenzen"><h2 id="x3-de-omgeving-en-grenzen-van-een-register"><bdi class="secno">3. </bdi>De omgeving en grenzen van een register</h2>
 <p><strong>Een register heeft betekenis door het proces dat het ondersteunt.</strong> Om te begrijpen waar de
 grenzen liggen, beginnen we bij het <a href="https://www.gemmaonline.nl/wiki/Common_Ground_vijflaagsmodel">vijflaagsmodel van Common
 Ground</a>:</p>
@@ -302,7 +287,7 @@ Ground</a>:</p>
 <p>Een register bevindt zich in laag 1 (databronnen) en laag 2 (diensten). Een register sluit aan bij
 laag 4 (procesinrichting) door de <strong>informatiestructuren</strong> van het proces: de conceptuele modellen
 die beschrijven welke informatie het proces nodig heeft en produceert.</p>
-<section id="autonomie-en-gemeenschappelijkheid"><h3 id="x2-1-autonomie-en-gemeenschappelijkheid"><bdi class="secno">2.1 </bdi>Autonomie en gemeenschappelijkheid</h3>
+<section id="autonomie-en-gemeenschappelijkheid"><h3 id="x3-1-autonomie-en-gemeenschappelijkheid"><bdi class="secno">3.1 </bdi>Autonomie en gemeenschappelijkheid</h3>
 <p>Binnen <a href="https://commonground.nl/">Common Ground</a> ligt de <strong>autonomie van gemeenten</strong> bij de
 interactielaag (hoe burgers worden bediend) en de procesbesturing (hoe het werk wordt
 georganiseerd). Elke gemeente kan eigen keuzes maken in werkwijze en gebruikersinteractie.</p>
@@ -311,7 +296,7 @@ zijn binnen een domein en welke gevolgen deze hebben. Dit zorgt voor interoperab
 gemeenten hun autonomie behouden.</p>
 <p>Gemeenten zijn hier gebruikt als voorbeeld, want dit geldt voor alle organisaties waar autonomie en
 gemeenschappelijkheid een rol spelen, oftewel een gedeeld domein betreffen.</p>
-</section><section id="registergrenzen-domein"><h3 id="x2-2-registergrenzen-domein"><bdi class="secno">2.2 </bdi>Registergrenzen: domein</h3>
+</section><section id="registergrenzen-domein"><h3 id="x3-2-registergrenzen-domein"><bdi class="secno">3.2 </bdi>Registergrenzen: domein</h3>
 <p>Een register is een verzameling geordende informatie. De grenzen van de verzameling worden net als
 de betekenis en samenhang van de in het register opgeslagen informatie bepaald vanuit het <strong>domein</strong>
 dat voor het register verantwoordelijk is. Anders dan in de
@@ -329,7 +314,7 @@ een zekere mate van samenhang. Tegelijkertijd kan het binnen één domein voorko
 register en welke buiten de registergrenzen zou moeten vallen, biedt het denken in 'sferen'
 onvoldoende aanknopingspunten. Daarom introduceren we <strong>bounded context</strong> als begrenzend begrip. Ook
 dit concept is ontleend aan [<cite><a class="bibref respec-offending-element" data-link-type="biblio" href="#bib-domain-driven-design" title="Reference &quot;[domain-driven-design]&quot; not found." id="respec-offender-reference-domain-driven-design-not-found">domain-driven-design</a></cite>].</p>
-</section><section id="bounded-context"><h3 id="x2-3-bounded-context"><bdi class="secno">2.3 </bdi>Bounded context</h3>
+</section><section id="bounded-context"><h3 id="x3-3-bounded-context"><bdi class="secno">3.3 </bdi>Bounded context</h3>
 <p>Binnen een domein kunnen meerdere subdomeinen of taakgebieden bestaan. Daarbij horen
 verantwoordelijkheden, die zijn toegekend aan specifieke teams, afdelingen of bedrijfseenheden. Zij
 worden ondersteund door eigen semantiek, processen en regels. Deze zaken kunnen worden beschreven in
@@ -359,7 +344,7 @@ een bounded context (idealiter) verdwijnen. Hier geldt (zoveel mogelijk) dat:</p
 <li>regels en gedrag consistent zijn, en</li>
 <li>bedrijfsprocessen op elkaar aansluiten.</li>
 </ul>
-</section><section id="wellbounded-registers"><h3 id="x2-4-wellbounded-registers"><bdi class="secno">2.4 </bdi>'Wellbounded' registers</h3>
+</section><section id="wellbounded-registers"><h3 id="x3-4-wellbounded-registers"><bdi class="secno">3.4 </bdi>'Wellbounded' registers</h3>
 <p>Bestaande registers bestrijken vaak meerdere bounded contexten. Zo zou je bijvoorbeeld binnen de
 Basisregistratie Personen (BRP) bijgehouden informatie over verblijfplaats, verblijfsrecht,
 kiesrecht en reisdocumenten ieder als 'eigen' bounded context kunnen beschouwen. Als je dat
@@ -387,7 +372,7 @@ en (door)ontwikkeld worden.</li>
 <li>Een register valt samen met een (en één) bounded context, en dus</li>
 <li>bepalen de bijhoudingsverantwoordelijke(n) de registergrenzen</li>
 </ol>
-</section><section id="bepalen-van-de-bounds"><h3 id="x2-5-bepalen-van-de-bounds"><bdi class="secno">2.5 </bdi>Bepalen van de 'bounds'</h3>
+</section><section id="bepalen-van-de-bounds"><h3 id="x3-5-bepalen-van-de-bounds"><bdi class="secno">3.5 </bdi>Bepalen van de 'bounds'</h3>
 <p>In de praktijk laten de 'bounds' van een context zich niet altijd gemakkelijk herkennen en
 afbakenen. Bovendien kunnen bounded contexten onder invloed van impliciete of uitgesproken belangen
 worden 'opgerekt' of juist verkleind. In algemene zin is moeilijk te zeggen wanneer voor een
@@ -415,7 +400,7 @@ gedistribueerd af te handelen.</li>
 <li><strong>Model beschrijft domein zonder zelfstandig bestaansrecht.</strong> Gegevens in een register hebben
 ‘los’ geen enkel bestaansrecht en zijn niet te generaliseren voor gebruik in andere domeinen.</li>
 </ol>
-</section><section id="uitvoeringsproces-op-hoofdlijnen"><h3 id="x2-6-uitvoeringsproces-op-hoofdlijnen"><bdi class="secno">2.6 </bdi>Uitvoeringsproces op hoofdlijnen</h3>
+</section><section id="uitvoeringsproces-op-hoofdlijnen"><h3 id="x3-6-uitvoeringsproces-op-hoofdlijnen"><bdi class="secno">3.6 </bdi>Uitvoeringsproces op hoofdlijnen</h3>
 <p>Het uitvoeringsproces binnen een domein volgt een herkenbaar patroon. Door dit patroon te begrijpen,
 wordt duidelijk waar het register precies bijdraagt en waar de grenzen liggen.</p>
 <p>// <strong>TODO</strong> Vereenvoudigd plaatje van een administratief uitvoeringsproces (process flow plaatje?):
@@ -441,7 +426,7 @@ presentatie[^1] toont alleen de informatie die relevant is voor de ontvangende p
 stelt ze beschikbaar voor raadpleging.</p>
 <p><img src="/assets/uitvoeringsproces.svg" alt="Gedetailleerd uitvoeringsproces dat het register ondersteunt">
 <em>Figuur 2: Gedetailleerd uitvoeringsproces dat het register ondersteunt</em></p>
-<section id="het-domeinmodel-als-kern"><h4 id="x2-6-1-het-domeinmodel-als-kern"><bdi class="secno">2.6.1 </bdi>Het domeinmodel als kern</h4>
+<section id="het-domeinmodel-als-kern"><h4 id="x3-6-1-het-domeinmodel-als-kern"><bdi class="secno">3.6.1 </bdi>Het domeinmodel als kern</h4>
 <p>Het <strong>domeinmodel</strong> definieert wat binnen het domein mogelijk is. Het beschrijft:</p>
 <ul>
 <li><strong>Taakdefinities</strong>: Welke acties mogelijk zijn binnen het domein</li>
@@ -454,31 +439,31 @@ De signaalverwerking interpreteert deze naar het domeinmodel toe: welke van de b
 moet worden uitgevoerd?</p>
 <p>Het domeinmodel vormt de kern van wat het register ondersteunt - de mogelijke acties en hun
 gevolgen.</p>
-</section><section id="signaal-ontvangen-en-interpreteren"><h4 id="x2-6-2-signaal-ontvangen-en-interpreteren"><bdi class="secno">2.6.2 </bdi>Signaal ontvangen en interpreteren</h4>
+</section><section id="signaal-ontvangen-en-interpreteren"><h4 id="x3-6-2-signaal-ontvangen-en-interpreteren"><bdi class="secno">3.6.2 </bdi>Signaal ontvangen en interpreteren</h4>
 <ul>
 <li>Een gebeurtenis binnen of buiten het domein leidt tot een <em>Signaal</em></li>
 <li><em>Signaalverwerking</em> beoordeelt of dit signaal relevant is voor het domein</li>
 <li>Relevante signalen worden vertaald naar acties die het domein kan uitvoeren</li>
 </ul>
-</section><section id="taken-definieren-en-uitvoeren"><h4 id="x2-6-3-taken-definieren-en-uitvoeren"><bdi class="secno">2.6.3 </bdi>Taken definiëren en uitvoeren</h4>
+</section><section id="taken-definieren-en-uitvoeren"><h4 id="x3-6-3-taken-definieren-en-uitvoeren"><bdi class="secno">3.6.3 </bdi>Taken definiëren en uitvoeren</h4>
 <ul>
 <li>Uit het signaal ontstaan één of meerdere <em>Taken</em> die binnen het domein uitgevoerd kunnen worden</li>
 <li><em>Taakuitvoering</em> voert deze taken uit volgens de regels van het <em>Domeinmodel</em></li>
 <li>Taken volgen <em>Taakdefinities</em> en <em>Taakverwerkingsregels</em> uit het domeinmodel</li>
 </ul>
-</section><section id="gevolgen-vastleggen"><h4 id="x2-6-4-gevolgen-vastleggen"><bdi class="secno">2.6.4 </bdi>Gevolgen vastleggen</h4>
+</section><section id="gevolgen-vastleggen"><h4 id="x3-6-4-gevolgen-vastleggen"><bdi class="secno">3.6.4 </bdi>Gevolgen vastleggen</h4>
 <ul>
 <li>Uitgevoerde taken leiden tot <em>Gevolgen</em> - de daadwerkelijke veranderingen in het domein</li>
 <li>Deze gevolgen vormen de nieuwe waarheid voor dit domein</li>
 </ul>
-</section><section id="informatie-beschikbaar-stellen"><h4 id="x2-6-5-informatie-beschikbaar-stellen"><bdi class="secno">2.6.5 </bdi>Informatie beschikbaar stellen</h4>
+</section><section id="informatie-beschikbaar-stellen"><h4 id="x3-6-5-informatie-beschikbaar-stellen"><bdi class="secno">3.6.5 </bdi>Informatie beschikbaar stellen</h4>
 <ul>
 <li><em>Presentatieopmaking</em> creëert verschillende <em>Presentaties</em> op basis van de gevolgen</li>
 <li>Elke presentatie is afgestemd op specifieke informatiebehoeften volgens <em>Presentatiedefinities</em> en
 <em>Effectverwerkingsregels</em> uit het domeinmodel</li>
 <li>Presentaties kunnen als nieuwe signalen dienen voor vervolgprocessen in eigen of andere domeinen</li>
 </ul>
-</section></section><section id="applicatieve-ondersteuning-met-het-register"><h3 id="x2-7-applicatieve-ondersteuning-met-het-register"><bdi class="secno">2.7 </bdi>Applicatieve ondersteuning met het register</h3>
+</section></section><section id="applicatieve-ondersteuning-met-het-register"><h3 id="x3-7-applicatieve-ondersteuning-met-het-register"><bdi class="secno">3.7 </bdi>Applicatieve ondersteuning met het register</h3>
 <p>Het uitvoeringsproces krijgt concrete vorm in een applicatiearchitectuur. Het register ondersteunt
 dit proces door de juiste componenten en datastromen in te richten. Ultiem is een (business)
 domeinmodel gelijk aan een register, één <em>bounded context</em> met eigen regels en begrippen, zoals
@@ -490,27 +475,27 @@ uitgangspunt.</p>
 <p><img src="/assets/registeranatomie.svg" alt="Applicatieve ondersteuning en architectuurelementen waaruit het register
 bestaat"> <em>Figuur 3: Applicatieve ondersteuning en
 architectuurelementen waaruit het register bestaat</em></p>
-<section id="van-proces-naar-applicatie"><h4 id="x2-7-1-van-proces-naar-applicatie"><bdi class="secno">2.7.1 </bdi>Van proces naar applicatie</h4>
+<section id="van-proces-naar-applicatie"><h4 id="x3-7-1-van-proces-naar-applicatie"><bdi class="secno">3.7.1 </bdi>Van proces naar applicatie</h4>
 <p>Het abstracte proces wordt concreet door deze architectuurcomponenten:</p>
-</section><section id="notificatie-command-signaalverwerking"><h4 id="x2-7-2-notificatie-command-signaalverwerking"><bdi class="secno">2.7.2 </bdi>Notificatie → Command (Signaalverwerking)</h4>
+</section><section id="notificatie-command-signaalverwerking"><h4 id="x3-7-2-notificatie-command-signaalverwerking"><bdi class="secno">3.7.2 </bdi>Notificatie → Command (Signaalverwerking)</h4>
 <ul>
 <li><strong>Notificatieprocessor</strong> ontvangt <em>notificaties</em> van binnen en buiten het domein</li>
 <li>Beoordeelt relevantie voor het eigen domein door raadpleging van projecties</li>
 <li>Vertaalt relevante notificaties naar <em>commands</em> volgens domeinconventies</li>
 </ul>
-</section><section id="command-effecten-taakuitvoering"><h4 id="x2-7-3-command-effecten-taakuitvoering"><bdi class="secno">2.7.3 </bdi>Command → Effecten (Taakuitvoering)</h4>
+</section><section id="command-effecten-taakuitvoering"><h4 id="x3-7-3-command-effecten-taakuitvoering"><bdi class="secno">3.7.3 </bdi>Command → Effecten (Taakuitvoering)</h4>
 <ul>
 <li><strong>Commandprocessor</strong> ontvangt commands en bepaalt welke <em>effecten</em> ontstaan</li>
 <li>Voert domeinregels uit en valideert tegen bestaande gegevens via projecties</li>
 <li>Effecten beschrijven de daadwerkelijke veranderingen binnen het domein</li>
 </ul>
-</section><section id="effecten-projecties-presentatieopmaking"><h4 id="x2-7-4-effecten-projecties-presentatieopmaking"><bdi class="secno">2.7.4 </bdi>Effecten → Projecties (Presentatieopmaking)</h4>
+</section><section id="effecten-projecties-presentatieopmaking"><h4 id="x3-7-4-effecten-projecties-presentatieopmaking"><bdi class="secno">3.7.4 </bdi>Effecten → Projecties (Presentatieopmaking)</h4>
 <ul>
 <li><strong>Effectprocessor</strong> maakt <em>projecties</em> op basis van effecten</li>
 <li>Projecties bevatten alleen informatie uit het eigen domein ('data bij de bron')</li>
 <li>Elke projectie is afgestemd op specifieke (groepen van)[^1] informatiebehoeften</li>
 </ul>
-</section><section id="register-commands-effecten-projecties"><h4 id="x2-7-5-register-commands-effecten-projecties"><bdi class="secno">2.7.5 </bdi>Register = Commands + Effecten + Projecties</h4>
+</section><section id="register-commands-effecten-projecties"><h4 id="x3-7-5-register-commands-effecten-projecties"><bdi class="secno">3.7.5 </bdi>Register = Commands + Effecten + Projecties</h4>
 <p>Het register bestaat uit:</p>
 <ul>
 <li><strong>Commands</strong>: De opdrachten aan het register, aangeboden met de intentie daarin een verandering
@@ -547,7 +532,7 @@ eigen architectuur.</p>
 
     document.getElementById("probl").insertAdjacentHTML('afterend', content);
   </script>
-  <section id="conformance"><h2 id="x3-conformiteit"><bdi class="secno">3. </bdi>Conformiteit</h2><p>Naast onderdelen die als niet normatief gemarkeerd zijn, zijn ook alle diagrammen, voorbeelden, en noten in dit document niet normatief. Verder is alles in dit document normatief.</p></section>
+  <section id="conformance"><h2 id="x4-conformiteit"><bdi class="secno">4. </bdi>Conformiteit</h2><p>Naast onderdelen die als niet normatief gemarkeerd zijn, zijn ook alle diagrammen, voorbeelden, en noten in dit document niet normatief. Verder is alles in dit document normatief.</p></section>
   <section id="tof"></section>
   <section id="index" class="appendix"><h2 id="a-index"><bdi class="secno">A. </bdi>Index</h2><section id="index-defined-here">
     <h3 id="a-1-begrippen-gedefinieerd-door-deze-specificatie"><bdi class="secno">A.1 </bdi>Begrippen gedefinieerd door deze specificatie</h3>
