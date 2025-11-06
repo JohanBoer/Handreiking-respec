@@ -8,7 +8,6 @@ on:
 
 jobs:
   main:
-    name: Snapshot
     runs-on: ubuntu-22.04
 
     steps:
@@ -72,13 +71,13 @@ jobs:
           cp -r ~/static/* ./docs/
 
       # -----------------------
-      # Create Pull Request via API (geen git push nodig)
+      # Create Pull Request using PAT (no git push issues)
       # -----------------------
       - name: Create Pull Request with generated docs
         id: pr
         uses: peter-evans/create-pull-request@v6
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GH_PAT }}   # <--- Gebruik je PAT hier
           commit-message: "Automatisch gegenereerde bestanden toegevoegd"
           branch: workflow/docs-update-${{ github.run_id }}
           base: main
@@ -93,6 +92,6 @@ jobs:
         if: steps.pr.outputs.pull-request-number != ''
         uses: peter-evans/enable-pull-request-automerge@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GH_PAT }}  # <--- Gebruik dezelfde PAT
           pull-request-number: ${{ steps.pr.outputs.pull-request-number }}
           merge-method: squash
