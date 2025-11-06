@@ -1,7 +1,7 @@
 # Command
 
 - Werkdefinitie: een command is een opdracht aan het register, aangeboden met de intentie daarin een verandering aan te brengen.
-- Aangepast vanwege een 5 testen
+- Aangepast vanwege een test of twee
 
 
 ## Twijfel en dry-run
