@@ -23,14 +23,6 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Install dependencies
-        run: |
-          if [ -f package-lock.json ]; then
-            npm ci
-          else
-            npm install
-          fi
-
       - name: Generate snapshot.html via ReSpec
         run: |
           mkdir -p static
