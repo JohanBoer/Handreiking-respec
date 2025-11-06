@@ -12,7 +12,7 @@ jobs:
 
     steps:
       # -----------------------
-      # Checkout repository
+      # Checkout GitHub repository
       # -----------------------
       - uses: actions/checkout@v4
         with:
@@ -27,7 +27,7 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
       # -----------------------
-      # Remove docs folder if exists
+      # Remove docs folder
       # -----------------------
       - name: Remove docs folder
         run: |
@@ -52,15 +52,15 @@ jobs:
       # -----------------------
       # Generate PDF
       # -----------------------
-      # - name: Generate PDF
-      #   run: |
-      #     cp ~/static/snapshot.html snapshot.html
-      #     npm i puppeteer
-      #     python3 -m http.server 8080 &
-      #     wget https://raw.githubusercontent.com/Logius-standaarden/Automatisering/main/scripts/pdf.js
-      #     rm -f *.pdf
-      #     node pdf.js
-      #     mv *.pdf ~/static/
+      - name: Generate PDF
+        run: |
+          cp ~/static/snapshot.html snapshot.html
+          npm i puppeteer
+          python3 -m http.server 8080 &
+          wget https://raw.githubusercontent.com/Logius-standaarden/Automatisering/main/scripts/pdf.js
+          rm -f *.pdf
+          node pdf.js
+          mv *.pdf ~/static/
 
       # -----------------------
       # Copy generated files to docs
@@ -71,13 +71,13 @@ jobs:
           cp -r ~/static/* ./docs/
 
       # -----------------------
-      # Create Pull Request using PAT (no git push issues)
+      # Create Pull Request in GitHub
       # -----------------------
-      - name: Create Pull Request with generated docs
+      - name: Create Pull Request
         id: pr
         uses: peter-evans/create-pull-request@v6
         with:
-          token: ${{ secrets.GH_PAT }}   # <--- Gebruik je PAT hier
+          token: ${{ secrets.GH_PAT }}
           commit-message: "Automatisch gegenereerde bestanden toegevoegd"
           branch: workflow/docs-update-${{ github.run_id }}
           base: main
@@ -92,6 +92,29 @@ jobs:
         if: steps.pr.outputs.pull-request-number != ''
         uses: peter-evans/enable-pull-request-automerge@v3
         with:
-          token: ${{ secrets.GH_PAT }}  # <--- Gebruik dezelfde PAT
+          token: ${{ secrets.GH_PAT }}
           pull-request-number: ${{ steps.pr.outputs.pull-request-number }}
           merge-method: squash
+
+      # -----------------------
+      # Push snapshot.html to GitLab
+      # -----------------------
+      - name: Push snapshot.html to GitLab
+        env:
+          GITLAB_PAT: ${{ secrets.GITLAB_PAT }}
+        run: |
+          # Clone GitLab repository
+          git clone https://oauth2:$GITLAB_PAT@gitlab.com/JohanBoer/website.git temp-website
+          cd temp-website
+
+          # Kopieer snapshot.html naar handreiking.html
+          cp ../../docs/snapshot.html content/handreiking.html
+
+          # Commit en push alleen als er wijzigingen zijn
+          git add content/handreiking.html
+          if git diff-index --quiet HEAD; then
+            echo "No changes to commit"
+          else
+            git commit -m "Update handreiking.html from GitHub Actions"
+            git push origin main
+          fi
