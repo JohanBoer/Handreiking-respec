@@ -13,16 +13,16 @@ jobs:
 
     steps:
       # -----------------------
-      # Checkout repository with push access
+      # Checkout repository
       # -----------------------
       - uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }} # allows pushes
 
       # -----------------------
       # Safe cleanup of docs folder
       # -----------------------
       - name: Safe remove docs folder
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
@@ -31,12 +31,15 @@ jobs:
             rm -rf ./docs
             echo "Folder './docs' removed."
 
+            # Set remote using PAT
+            git remote set-url origin https://$GH_PAT@github.com/${GITHUB_REPOSITORY}.git
+
             git add ./docs
             if git diff-index --quiet HEAD; then
               echo "No changes to commit"
             else
               git commit -m "Automatisch verwijderde docs map"
-              git push
+              git push origin HEAD:main
             fi
           else
             echo "Folder './docs' does not exist. Skipping removal."
@@ -100,14 +103,19 @@ jobs:
       # Commit & push generated files
       # -----------------------
       - name: Commit & push generated files
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Set remote using PAT
+          git remote set-url origin https://$GH_PAT@github.com/${GITHUB_REPOSITORY}.git
 
           git add ./docs/
           if git diff-index --quiet HEAD; then
             echo "No changes to commit"
           else
             git commit -m "Automatisch gegenereerde bestanden toegevoegd"
-            git push
+            git push origin HEAD:main
           fi
