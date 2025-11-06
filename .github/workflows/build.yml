@@ -57,7 +57,7 @@ jobs:
           cp ~/static/snapshot.html snapshot.html
           npm i puppeteer
           python3 -m http.server 8080 &
-          wget https://raw.githubusercontent.com/Logius-standaarden/Automatisering/main/scripts/pdf.js
+          wget ./js/pdf.js
           rm -f *.pdf
           node pdf.js
           mv *.pdf ~/static/
