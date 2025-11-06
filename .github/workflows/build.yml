@@ -98,22 +98,21 @@ jobs:
       # -----------------------
       # Push snapshot.html to GitLab
       # -----------------------
-      - name: Push snapshot.html to GitLab
-        env:
-          GITLAB_PAT: ${{ secrets.GITLAB_PAT }}
-        run: |
-          # Clone GitLab repository
-          git clone https://oauth2:$GITLAB_PAT@gitlab.com/JohanBoer/website.git temp-website
-          cd temp-website
-
-          # Kopieer snapshot.html naar handreiking.html
-          cp ../../docs/snapshot.html content/handreiking.html
-
-          # Commit en push alleen als er wijzigingen zijn
-          git add content/handreiking.html
-          if git diff-index --quiet HEAD; then
-            echo "No changes to commit"
-          else
-            git commit -m "Update handreiking.html from GitHub Actions"
+     - name: Push snapshot.html to GitLab
+       env:
+         GITLAB_PAT: ${{ secrets.GITLAB_PAT }}
+       run: |
+         # Clone GitLab repository
+         git clone https://oauth2:$GITLAB_PAT@gitlab.com/JohanBoer/website.git temp-website
+                # Kopieer snapshot.html naar handreiking.html in content-map
+         cp ./docs/snapshot.html temp-website/content/handreiking.html
+                cd temp-website
+         git add content/handreiking.html
+                if git diff-index --quiet HEAD; then
+           echo "No changes to commit"
+         else
+           git commit -m "Update handreiking.html from GitHub Actions"
+           git push origin main
+         fi
             git push origin main
           fi
