@@ -10,18 +10,21 @@ on:
 
 jobs:
   main:
+    # ⛔️ voorkom loop bij commits van github-actions[bot]
+    if: github.actor != 'github-actions[bot]'
+
     runs-on: ubuntu-22.04
 
     steps:
       # -----------------------
-      # Checkout GitHub repository
+      # Checkout repository
       # -----------------------
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       # -----------------------
-      # Configure Git user
+      # Configure Git
       # -----------------------
       - name: Configure Git
         run: |
@@ -35,20 +38,21 @@ jobs:
         run: |
           if [ -d "./docs" ]; then
             rm -rf ./docs
-            echo "Folder './docs' removed."
+            echo "🧹 Folder './docs' removed."
           else
-            echo "Folder './docs' does not exist. Skipping removal."
+            echo "✅ Folder './docs' does not exist. Skipping removal."
           fi
 
       # -----------------------
       # Prepare static folder
       # -----------------------
-      - run: mkdir -p ~/static
+      - name: Prepare static folder
+        run: mkdir -p ~/static
 
       # -----------------------
       # Generate static HTML
       # -----------------------
-      - name: Static HTML
+      - name: Generate static HTML
         run: npx respec --localhost --src index.html --out ~/static/snapshot.html
 
       # -----------------------
@@ -68,9 +72,10 @@ jobs:
         run: |
           mkdir -p ./docs
           cp -r ~/static/* ./docs/
+          echo "📄 Copied generated files to ./docs"
 
       # -----------------------
-      # Create Pull Request in GitHub
+      # Create Pull Request
       # -----------------------
       - name: Create Pull Request
         id: pr
@@ -102,15 +107,5 @@ jobs:
         env:
           GITLAB_PAT: ${{ secrets.GITLAB_PAT }}
         run: |
-          # Clone GitLab repository
-          git clone https://oauth2:$GITLAB_PAT@gitlab.com/JohanBoer/website.git temp-website
-          # Kopieer snapshot.html naar handreiking.html in content-map
-          cp ./docs/snapshot.html temp-website/static/handreiking/handreiking.html
-                 cd temp-website
-          git add static/handreiking/handreiking.html
-                 if git diff-index --quiet HEAD; then
-            echo "No changes to commit"
-          else
-            git commit -m "Update handreiking.html from GitHub Actions"
-            git push origin main
-          fi
+          echo "🔄 Syncing to GitLab..."
+          git clone https://oauth2:$GITLAB_P_
