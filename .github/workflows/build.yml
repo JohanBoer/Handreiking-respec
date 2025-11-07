@@ -108,4 +108,27 @@ jobs:
           GITLAB_PAT: ${{ secrets.GITLAB_PAT }}
         run: |
           echo "🔄 Syncing to GitLab..."
-          git clone https://oauth2:$GITLAB_P_
+
+          # Controleer of de secret is ingesteld
+          if [ -z "$GITLAB_PAT" ]; then
+            echo "❌ Fout: de GITLAB_PAT secret is niet ingesteld of leeg."
+            echo "👉 Voeg deze toe via: Settings → Secrets and variables → Actions → New repository secret"
+            exit 1
+          fi
+
+          # Clone GitLab repository
+          git clone "https://oauth2:${GITLAB_PAT}@gitlab.com/JohanBoer/website.git" temp-website
+
+          # Kopieer snapshot.html naar handreiking.html
+          cp ./docs/snapshot.html temp-website/static/handreiking/handreiking.html
+
+          cd temp-website
+          git add static/handreiking/handreiking.html
+
+          if git diff-index --quiet HEAD; then
+            echo "✅ Geen wijzigingen om te committen"
+          else
+            git commit -m "Update handreiking.html from GitHub Actions"
+            git push origin main
+            echo "🚀 Bestand succesvol bijgewerkt in GitLab"
+          fi
